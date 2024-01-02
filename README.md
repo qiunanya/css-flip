@@ -6,6 +6,9 @@
 
 ​       Flip 它本质上是一个原则，而不是一个框架或库。这是一种思考动画的方式，并试图让它们对浏览器来说尽可能便宜，如果一切顺利的话，应该会转换为 60fps 动画。
 
+获取更多前端资源：
+![这是图片](./images/source.png)
+
 ### FLIP经典案例
 * [random(随机布局)](https://qiunanya.github.io/css-flip/pages/random.html)
 * [list-add-remove(列表增删)](https://qiunanya.github.io/css-flip/pages/list-add-remove.html)
