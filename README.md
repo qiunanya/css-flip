@@ -6,6 +6,13 @@
 
 ​       Flip 它本质上是一个原则，而不是一个框架或库。这是一种思考动画的方式，并试图让它们对浏览器来说尽可能便宜，如果一切顺利的话，应该会转换为 60fps 动画。
 
+### FLIP经典案例
+* [random(随机布局)](https://qiunanya.github.io/css-flip/pages/random.html)
+* [list-add-remove(列表增删)](https://qiunanya.github.io/css-flip/pages/list-add-remove.html)
+* [box-move(移动盒子)](https://qiunanya.github.io/css-flip/pages/box-move.html)
+* [list-image(图片预览)](https://qiunanya.github.io/css-flip/pages/list-image.html)
+
+
 ### FLIP核心思想
 
 Flip 核心思想是把动画翻转【invert】过来，先获取元素【first】动画开始前的dom和【last】动画结束后的dom，然后动态计算【first】和【last】差值 【invert】，在【play】配置【invert】动画平滑过渡，以低成本动画播放，减少动画成本，提升动画性能。
