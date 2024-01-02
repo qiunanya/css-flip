@@ -4,21 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>flip盒子移动</title>
+    <link rel="stylesheet" href="../css/button.css">
     <style>
         * {
             margin:0;
             padding:0;
         }
         body {
-            min-height: calc(100vh - 40px);
-            padding: 20px;
+            min-height: 100vh;
         }
         .move-element {
             max-width: 200px;
             max-height: 200px;
             background: #10ac84;
             border-radius: 12px;
-            margin-bottom: 50px;
+            margin: 5px 15px 12px;
         }
         .imgBox {
             width: 100%;
@@ -28,6 +28,7 @@
     </style>
 </head>
 <body>
+    <button class="btn-back" onclick="history.back()">返回</button>
     <div class="move-element">
         <img src="../images/list/10.jpg" class="imgBox">
     </div>

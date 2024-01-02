@@ -3,6 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>列表增删动效</title>
+    <link rel="stylesheet" href="../css/button.css">
 	<style>
         * {
             margin: 0;
@@ -16,7 +17,7 @@
         }
 		.flip {
 			list-style: none;
-			padding: 40px;
+			padding: 5px 15px;
 			display: flex;
             flex-flow: row wrap;
 		}
@@ -43,20 +44,11 @@
 			border-radius: 15px;
 			cursor: pointer;
 		}
-        .btn {
-            border: none;
-            margin-left: 100px;
-            background: tomato;
-            font-weight: 600;
-            padding: 12px;
-            color: #eee;
-            border-radius: 12px;
-            cursor: pointer;
-        }
 	</style>
 	<script src="../script/Flip.js"></script>
 </head>
 <body>
+	<button class="btn-back" onclick="history.back()">返回</button>
 	<ul class="flip">
 		<!-- <li>谷歌浏览器</li>
 		<li>控制台</li>
