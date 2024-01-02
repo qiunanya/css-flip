@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FLIP技术图片预览功能</title>
+    <link rel="stylesheet" href="../css/flip.css">
+</head>
+<body>
+    <div data-flip="flip-list-wrapper" class="container">
+        <div data-flip-item="flip-item" class="item" data-key="1">
+            <img src="../images/list/1.jpg" alt="图片" />
+        </div>
+        <div data-flip-item="flip-item" class="item" data-key="2">
+            <img src="../images/list/2.jpg" alt="图片" />
+        </div>
+        <div data-flip-item="flip-item" class="item" data-key="3">
+            <img src="../images/list/3.jpg" alt="图片" />
+        </div>
+        <div data-flip-item="flip-item" class="item" data-key="4">
+            <img src="../images/list/4.jpg" alt="图片" />
+        </div>
+        <div data-flip-item="flip-item" class="item" data-key="5">
+            <img src="../images/list/5.jpg" alt="图片" />
+        </div>
+        <div data-flip-item="flip-item" class="item" data-key="6">
+            <img src="../images/list/6.jpg" alt="图片" />
+        </div>
+        <div data-flip-item="flip-item" class="item" data-key="7">
+            <img src="../images/list/7.jpg" alt="图片" />
+        </div>
+        <div data-flip-item="flip-item" class="item" data-key="8">
+            <img src="../images/list/8.jpg" alt="图片" />
+        </div>
+        <div data-flip-item="flip-item" class="item" data-key="9">
+            <img src="../images/list/9.jpg" alt="图片" />
+        </div>
+        <div data-flip-item="flip-item" class="item" data-key="10">
+            <img src="../images/list/10.jpg" alt="图片" />
+        </div>
+        <div data-flip-item="flip-item" class="item" data-key="11">
+            <img src="../images/list/1.jpg" alt="图片" />
+        </div>
+        <div data-flip-item="flip-item" class="item" data-key="12">
+            <img src="../images/list/2.jpg" alt="" />
+        </div>
+        <div data-flip-item="flip-item" class="item" data-key="13">
+            <img src="../images/list/3.jpg" alt="图片" />
+        </div>
+        <div data-flip-item="flip-item" class="item" data-key="14">
+            <img src="../images/list/4.jpg" alt="图片" />
+        </div>
+        <div data-flip-item="flip-item" class="item" data-key="15">
+            <img src="../images/list/1.jpg" alt="" />
+        </div>
+        <div data-flip-item="flip-item" class="item" data-key="16">
+            <img src="../images/list/2.jpg" alt="图片" />
+        </div>
+        <div data-flip-item="flip-item" class="item" data-key="17">
+            <img src="../images/list/3.jpg" alt="图片" />
+        </div>
+        <div data-flip-item="flip-item" class="item" data-key="18">
+            <img src="../images/list/4.jpg" alt="图片" />
+        </div>
+    </div>
+    <div class="preview__dialog">
+        <div class="content">
+            <img />
+        </div>
+    </div>
+
+    <script>
+        const items = document.querySelectorAll('.item')
+        const detailItem = document.querySelector('.content')
+        const detailScene = document.querySelector('.preview__dialog')
+        // 初始化时蒙版图层不可见
+        detailScene.style.display = 'none'
+
+        // 遍历循环所有的items
+        items.forEach(item => {
+            item.onclick = function (evt) {
+                // 获取当前点击图片的对象
+                const itemImage = item.querySelector('img')
+                // 设置弹窗盒子data-image
+                detailItem.setAttribute('data-image', item.getAttribute('data-key'))
+                // 获取详情里面的img标签，设置src图片为当前点击图片
+                detailItem.querySelector('img').setAttribute('src', itemImage.getAttribute('src'))
+                // 设置蒙版层可见
+                detailScene.style.display = 'block'
+                // 当前点击图片对象的透明度设置为0，不可见
+                item.style.opacity = 0
+
+                // 获取当前图片对象的first状态和last状态
+                // first
+                const firstRect = itemImage.getBoundingClientRect()
+                // last 详情盒子detail位置信息
+                const lastRect = detailItem.getBoundingClientRect()
+                // detailItem 详情盒子加invert和play状态，也就是执行动画
+                // 由于有scale，会导致transformOrigin发生变化，在修改scale时需要将transformOrigin归零
+                detailItem.style.transformOrigin = "0 0"
+                detailItem.animate([{
+                    transform: `
+                        translate(${firstRect.left - lastRect.left}px, ${firstRect.top - lastRect.top}px)
+                        scale(${(firstRect.width / lastRect.width)})
+                    `},
+                    { transform: `translateX(0) translateY(0) scale(1)` }
+                ],
+                {
+                    duration: 600,
+                    easing: 'cubic-bezier(0.2, 0, 0.2, 1)'
+                }
+                )
+            }
+        })
+
+        // 点击蒙版层需要关闭预览
+        detailScene.onclick = function (evt) {
+            // 从详情盒子上拿到当前点击图片对象的data-key，在打开图片对象上时绑定的
+            const imageKey = detailItem.getAttribute("data-image")
+            // 获取当前点击详情包含的图片对象
+            const itemImage = document.querySelector(`[data-key="${imageKey}"]`);
+            // 获取first——》通过当前打开的图片对象
+            let itemImageRect = itemImage.getBoundingClientRect()
+            // 获取last——》通过打开的详情盒子
+            let detailItemRect = detailItem.getBoundingClientRect()
+            // 设置蒙版层不可见
+            detailScene.style.display = 'none'
+            // 当前点击详情包含的图片对象透明度设置为1
+            itemImage.style.opacity = 1
+            // 给详情盒子包含的图片对象设置invert和play状态
+            itemImage.animate(
+                [
+                    {
+                        zIndex: 2, // 保证图片恢复原位时在周围图片上一层
+                        transform: `
+                            translateX(${detailItemRect.left - itemImageRect.left}px)
+                            translateY(${detailItemRect.top - itemImageRect.top}px)
+                            scale(${detailItemRect.width / itemImageRect.width})
+                        `
+                    },
+                    {
+                        zIndex: 2, // 保证图片恢复原位时在周围图片上一层
+                        transform: `
+                        translateX(0)
+                        translateY(0)
+                        scale(1)
+                        `
+                    }
+                ],
+                {
+                    duration: 600,
+                    easing: "cubic-bezier(0.2, 0, 0.2, 1)"
+                }
+            );
+        }
+    </script>
+</body>
+</html>

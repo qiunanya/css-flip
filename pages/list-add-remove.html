@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>列表增删动效</title>
+	<style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            min-height: 100vh;
+            background: #001C30;
+            color: #fff;
+        }
+		.flip {
+			list-style: none;
+			padding: 40px;
+			display: flex;
+            flex-flow: row wrap;
+		}
+		.flip li {
+			width: 120px;
+            aspect-ratio: 1;
+			border-radius: 15px;
+			background: #10ac84;
+			margin: 10px;
+			padding: 15px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			position: relative;
+		}
+		.flip li span {
+			position: absolute;
+			bottom: 2px;
+			right: 10px;
+			display: inline-block;
+			padding: 0 5px;
+			background: tomato;
+			font-size: 14px;
+			border-radius: 15px;
+			cursor: pointer;
+		}
+        .btn {
+            border: none;
+            margin-left: 100px;
+            background: tomato;
+            font-weight: 600;
+            padding: 12px;
+            color: #eee;
+            border-radius: 12px;
+            cursor: pointer;
+        }
+	</style>
+    <script src="./scripts/Flip.js"></script>
+    <script src="./scripts/CustomFunFlip.js"></script>
+</head>
+<body>
+	<ul class="flip">
+		<!-- <li>谷歌浏览器</li>
+		<li>控制台</li>
+		<li>网络</li>
+		<li>存储</li>
+		<li>安全</li>
+		<li>资源</li>
+		<li>对象</li>
+		<li>记忆</li>
+		<li>应用</li>
+		<li>插件</li> -->
+	</ul>
+
+	<button class="btn" id="btn">新增元素</button>
+
+	<script>
+		let count = 0
+		let data = ['谷歌浏览器', '控制台', '网络', '存储', '安全', 
+		'资源', '对象', '记忆', '应用', '插件']
+		// 获取容器
+		const Ul = document.querySelector('.flip')
+		update(data)
+		// 更新视图
+		function update (data) {
+			for (let i = 0; i < data.length; i++) {
+				const li = document.createElement('li')
+				const span = document.createElement('span')
+				span.innerText = '删除'
+				span.onclick = deleteBtn
+				li.innerText = data[i]
+				li.appendChild(span)
+				Ul.append(li)
+			}
+		}
+
+		const btn = document.querySelector('#btn')
+		const list = document.getElementsByTagName('li')
+		// 新增
+		btn.onclick = function() {
+            const custFlip = new CustomFunFlip(list)
+			const Box = document.getElementsByClassName('flip')[0]
+            const li = document.createElement('li'), span = document.createElement('span')
+			span.innerText = "删除"
+            li.innerHTML = '新增_' + count++
+            li.appendChild(span)
+
+            // span.style.color = 'red'
+            li.style.background = '#068FFF'
+
+            span.onclick = deleteBtn
+            Box.insertBefore(li, Box.childNodes[0])
+
+			// 新增节点之后，渲染发生之前，执行过渡动画
+			custFlip.play()
+		}
+
+		// 删除
+        function deleteBtn({ target }) {
+            const list = document.getElementsByTagName('li')
+			const custFlip = new CustomFunFlip(list)
+            removeDom(target)
+			// 移除dom结构后重新执行过渡动画
+            custFlip.play()
+        }
+
+		// 删除 dom
+        function removeDom(target) {
+            target.parentNode.remove()
+        }
+	</script>
+</body>
+</html>

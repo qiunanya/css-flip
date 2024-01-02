@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>CSS-FLIP动画技术案例</title>
+        <style>
+            :root {
+                --color--: #919191;
+            }
+            * {
+                padding: 0;
+                margin: 0;
+                box-sizing: border-box;
+            }
+            body {
+                color: #fff;
+                min-width: 100vw;
+                min-height: 100vh;
+                background: #010d19;
+                padding: 12px;
+            }
+            [data-flip="flip"] {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                margin: 30px 0;
+            }
+            [data-flip="flip"] li {
+                list-style: none;
+                padding: 14px 12px;
+                border: 1px solid #fff;
+                border-radius: 4px;
+                margin-right: 12px;
+                background: rgba(255, 255, 255, 1);
+            }
+            .stereoscopic {
+                text-shadow: 1px 1px 1px var(--color--), 1px 2px 1px var(--color--), 1px 3px 1px var(--color--),
+                    1px 4px 1px var(--color--), 1px 5px 1px var(--color--), 1px 6px 1px var(--color--);
+            }
+        </style>
+    </head>
+    <body>
+        <h2 class="stereoscopic">FLIP动画技术案例___布依前端出品</h2>
+        <ul data-flip="flip">
+            <li><a class="a_tar" href="./pages/random.html">random(随机布局)</a></li>
+            <li><a class="a_tar" href="./pages/list-add-remove.html">list-add-remove(列表增删)</a></li>
+            <li><a class="a_tar" href="./pages/box-move.html">box-move(移动盒子)</a></li>
+            <li><a class="a_tar" href="./pages/list-image.html">list-image(图片预览)</a></li>
+        </ul>
+        <img src="./images/flip.jpg" alt="" srcset="" />
+    </body>
+</html>

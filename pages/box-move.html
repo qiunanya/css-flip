@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>flip盒子移动</title>
+    <style>
+        * {
+            margin:0;
+            padding:0;
+        }
+        body {
+            min-height: calc(100vh - 40px);
+            padding: 20px;
+        }
+        .move-element {
+            max-width: 200px;
+            max-height: 200px;
+            background: #10ac84;
+            border-radius: 12px;
+            margin-bottom: 50px;
+        }
+        .imgBox {
+            width: 100%;
+            height: 100%;
+            border-radius: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="move-element">
+        <img src="../images/list/10.jpg" class="imgBox">
+    </div>
+    <!-- 预览盒子 -->
+    <button class="btn">位移X:50%</button>
+    <button class="reset">重置</button>
+    <script>
+        // 移动盒子示例
+        const moveBox = document.querySelector('.move-element');
+        // 按钮
+        const btn = document.querySelector('.btn')
+        // 重置
+        const reset = document.querySelector('.reset')
+    
+        let first, last;
+        btn.onclick = function () {
+            // First: 获取当前边界，动画起点
+            first = moveBox.getBoundingClientRect()
+            moveBox.style.position = 'relative'
+            moveBox.style.left = '50%'
+            // Last: 得到最终的边界，动画终点
+            last = moveBox.getBoundingClientRect()
+            flipAnimate()
+        }
+        reset.onclick = function () {
+            first = moveBox.getBoundingClientRect()
+            moveBox.style.position = 'relative'
+            moveBox.style.left = '0%'
+            last = moveBox.getBoundingClientRect()
+            flipAnimate()
+        }
+
+        // 执行动画
+        function flipAnimate () {
+            // Invert【重要】: 确定第一个和最后一个边界之间的增量以反转元素
+            // 获得动画起点和终点的差值，过渡动画才生效
+            const deltaX = first.left - last.left;
+            const deltaY = first.top - last.top;
+            const deltaW = first.width / last.width;
+            const deltaH = first.height / last.height;
+            
+            // Play: 对最终元素从第一个边界到最后一个边界进行动画处理（不进行变换）
+            // 过渡动画配置
+            moveBox.animate([{
+                transformOrigin: 'center',
+                transform: `
+                    translate(${deltaX}px, ${deltaY}px)
+                    scale(${deltaW}, ${deltaH})
+                `
+                }, {
+                transformOrigin: 'center',
+                transform: 'none'
+            }], {
+                duration: 600,
+                easing: 'cubic-bezier(0.68, -0.6, 0.32, 1.6)',
+                fill: 'both'
+            });
+        }
+    </script>
+</body>
+</html>

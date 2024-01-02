@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Flip动画</title>
+	<style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            min-height: 100vh;
+            background: #001C30;
+            color: #fff;
+        }
+		.flip {
+			list-style: none;
+			padding: 40px;
+			display: flex;
+            flex-flow: row wrap;
+		}
+		.flip li {
+			padding: 5px 15px;
+			width: 120px;
+            aspect-ratio: 1;
+            line-height: 100px;
+			text-align: center;
+			border-radius: 15px;
+			background: #10ac84;
+			margin: 10px;
+			padding: 15px;
+		}
+        .btn {
+            border: none;
+            margin-left: 100px;
+            background: tomato;
+            font-weight: 600;
+            padding: 12px;
+            color: #eee;
+            border-radius: 12px;
+            cursor: pointer;
+        }
+	</style>
+    <script src="../script/Flip.js"></script>
+</head>
+<body>
+	<ul class="flip">
+		<li>谷歌浏览器</li>
+		<li>控制台</li>
+		<li>网络</li>
+		<li>存储</li>
+		<li>安全</li>
+		<li>资源</li>
+		<li>对象</li>
+		<li>记忆</li>
+		<li>应用</li>
+		<li>插件</li>
+	</ul>
+
+	<button class="btn" id="btn">随机布局</button>
+
+	<script>
+		const btn = document.querySelector('#btn')
+		const list = document.getElementsByTagName('li')
+		btn.addEventListener('click', function() {
+			const flip = new FlipAnimate(list)
+            for (let i = 0; i < list.length; i++) {
+                const rd1 = Math.floor(Math.random() * list.length)
+				const rd2 = Math.floor(Math.random() * list.length)
+				list[rd1].parentNode.insertBefore(list[rd1], list[rd2])
+            }
+			flip.play()
+		})
+	</script>
+</body>
+</html>
