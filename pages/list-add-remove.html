@@ -54,8 +54,7 @@
             cursor: pointer;
         }
 	</style>
-    <script src="./scripts/Flip.js"></script>
-    <script src="./scripts/CustomFunFlip.js"></script>
+	<script src="../script/Flip.js"></script>
 </head>
 <body>
 	<ul class="flip">
@@ -97,7 +96,7 @@
 		const list = document.getElementsByTagName('li')
 		// 新增
 		btn.onclick = function() {
-            const custFlip = new CustomFunFlip(list)
+            const custFlip = new FlipAnimate(list)
 			const Box = document.getElementsByClassName('flip')[0]
             const li = document.createElement('li'), span = document.createElement('span')
 			span.innerText = "删除"
@@ -117,7 +116,7 @@
 		// 删除
         function deleteBtn({ target }) {
             const list = document.getElementsByTagName('li')
-			const custFlip = new CustomFunFlip(list)
+			const custFlip = new FlipAnimate(list)
             removeDom(target)
 			// 移除dom结构后重新执行过渡动画
             custFlip.play()

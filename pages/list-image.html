@@ -79,6 +79,8 @@
         // 遍历循环所有的items
         items.forEach(item => {
             item.onclick = function (evt) {
+                // 设置body滚动条隐藏，
+                document.body.style.overflowY = 'hidden'
                 // 获取当前点击图片的对象
                 const itemImage = item.querySelector('img')
                 // 设置弹窗盒子data-image
@@ -152,6 +154,7 @@
                     easing: "cubic-bezier(0.2, 0, 0.2, 1)"
                 }
             );
+            document.body.style.overflowY = 'auto'
         }
     </script>
 </body>
