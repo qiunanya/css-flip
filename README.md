@@ -14,6 +14,8 @@
 * [list-add-remove(列表增删)](https://qiunanya.github.io/css-flip/pages/list-add-remove.html)
 * [box-move(移动盒子)](https://qiunanya.github.io/css-flip/pages/box-move.html)
 * [list-image(图片预览)](https://qiunanya.github.io/css-flip/pages/list-image.html)
+* [鼠标拖拽单个图片复位效果](https://qiunanya.github.io/css-flip/pages/drag-one-el.html)
+* [鼠标批量拖拽元素复位效果](https://qiunanya.github.io/css-flip/pages/drag-batch-el.html)
 
 
 ### FLIP核心思想
