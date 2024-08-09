@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>鼠标批量拖拽元素复位效果.html</title>
+    <link rel="stylesheet" href="../css/drag_batch_el.css">
+</head>
+<body>
+    <h2>请用鼠标批量选中元素，在选中元素上拖拽看效果</h2>
+    <div id="box">
+        <div class="item" data-flip-key="one">
+            <div class="column" data-flip-key="column">1</div>
+        </div>
+        <div class="item" data-flip-key="two">
+            <div class="column" data-flip-key="column">2</div>
+        </div>
+        <div class="item" data-flip-key="three">
+            <div class="column" data-flip-key="column">3</div>
+        </div>
+        <div class="item" data-flip-key="four">
+            <div class="column" data-flip-key="column">4</div>
+        </div>
+    </div>
+    <div class="draw-selection"></div>
+    <div class="drag-box"></div>
+    <script src="../script/drag_batch_flip.js"></script>
+    <script src="../script/drag_batch_el.js"></script>
+</body>
+</html>

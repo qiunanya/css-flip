@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>鼠标拖拽单个图片复位效果.html</title>
+    <style>
+        * {
+            margin:0;
+            padding:0;
+        }
+        body {
+            min-height: calc(100vh - 40px);
+            padding: 10px;
+            overflow: hidden;
+        }
+        h2 {
+            text-align: center;
+            color: lightblue;
+            margin-bottom: 15px;
+        }
+        .container {
+            width: 200px;
+            height: 200px;
+            background: #10ac84;
+            border-radius: 12px;
+            margin-bottom: 50px;
+            user-select: none;
+        }
+        .imgBox {
+            width: 100%;
+            height: 100%;
+            border-radius: 12px;
+        }
+        .moveBox {
+            width: 200px;
+            height: 200px;
+            border-radius: 12px;
+            margin-bottom: 50px;
+            position: absolute;
+        }
+        .select {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h2>请用鼠标拖拽图片，然后释放鼠标后可看到恢复原来位置flip动画效果</h2>
+    <div class="select">
+        <span>动画效果</span>
+        <select name="cubic-bezier(0.68, -0.6, 0.32, 1.6)" id="select">
+            <option value="">--Please choose an option--</option>
+            <option value="ease">ease</option>
+            <option value="linear">linear</option>
+            <option value="ease-in">ease-in</option>
+            <option value="ease-out">ease-out</option>
+            <option value="ease-in-out">ease-in-out</option>
+            <option value="cubic-bezier(0.68, -0.6, 0.32, 1.6)">cubic-bezier(0.68, -0.6, 0.32, 1.6)</option>
+            <option value="cubic-bezier(.5, 0, .5, 1)" selected>cubic-bezier(.5, 0, .5, 1)</option>
+        </select>
+    </div>
+    <div class="container">
+        <img src="https://picsum.photos/id/0/300/300" class="imgBox">
+    </div>
+    <div class="moveBox">
+        <img src="" alt="" class="imgBox">
+    </div>
+    <script>
+        const body = document.body
+        const select = document.querySelector('.select')
+        const container = document.querySelector('.container')
+        const imgBox = document.querySelector('.imgBox')
+        const moveBox = document.querySelector('.moveBox')
+        moveBox.style.opacity = 0
+        var animation = ''
+        var first, last, isMouseDown = false, startX=0, startY=0;
+
+        select.addEventListener('mousedown', function(event) {
+            event.stopPropagation();
+            // 如果需要处理select自身的mousedown事件，也可以在这里处理
+        });
+
+        select.onchange = function (evt) {
+            animation = evt.target.value
+        }
+
+        body.onmousedown = function (evt) { 
+            const imgBoxRect = container.getBoundingClientRect()
+            if (!evt.target.className) return
+            
+            evt.preventDefault()
+            evt.stopPropagation()
+            startX=evt.clientX-imgBoxRect.left
+            startY=evt.clientY-imgBoxRect.top
+            isMouseDown = true      
+            if (evt.target.className !== 'imgBox') return
+            // last 状态值
+            last = imgBoxRect
+            
+            moveBox.querySelector('img').src = imgBox.src
+        }
+        body.onmousemove = function (evt) {
+            if (isMouseDown) {
+                moveBox.style.opacity = 1
+                moveBox.style.left = `${evt.clientX-startX}px`
+                moveBox.style.top = `${evt.clientY-startY}px`
+                imgBox.style.opacity = 0
+            }
+        }
+        body.onmouseup = function () {
+            if (!last || !isMouseDown) return
+            isMouseDown = false
+            // first 状态值
+            first = moveBox.getBoundingClientRect()
+            imgBox.style.opacity = 1
+            moveBox.style.opacity = 0
+            console.log(first, last);
+            
+            flipAnimate(imgBox)
+        }
+
+        // 执行动画
+        function flipAnimate (rect) {
+            // Invert【重要】: 确定第一个和最后一个边界之间的增量以反转元素
+            // 获得动画起点和终点的差值，过渡动画才生效
+            const deltaX = first.left - last.left;
+            const deltaY = first.top - last.top;
+            const deltaW = first.width / last.width;
+            const deltaH = first.height / last.height;
+            
+            // Play: 对最终元素从第一个边界到最后一个边界进行动画处理（不进行变换）
+            // 过渡动画配置
+            rect.animate([{
+                transformOrigin: 'center',
+                transform: `
+                    translate(${deltaX}px, ${deltaY}px)
+                    scale(${deltaW}, ${deltaH})
+                `
+                }, {
+                transformOrigin: 'center',
+                transform: 'none'
+            }], {
+                duration: 1500,
+                easing: animation || 'cubic-bezier(.5, 0, .5, 1)',
+                fill: 'both'
+            });
+        }
+    </script>
+</body>
+</html>
